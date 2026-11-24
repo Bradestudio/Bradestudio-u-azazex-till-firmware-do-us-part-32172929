@@ -39,6 +39,12 @@ def main():
         # The tender close is the heart of the line: it must never
         # silently go missing.
         sys.exit("entry line must end with die alone.")
+    machine_words = ("reboot", "battery", "firmware", "update", "crash")
+    if not any(word in line.lower() for word in machine_words):
+        # Criterion 4 of the judge's brief: the line must sound like a
+        # machine speaking, in its own hardware words — a vow with no
+        # machine word in it is not this entry.
+        sys.exit("entry line must carry a machine word (reboot/battery/firmware/update/crash)")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
